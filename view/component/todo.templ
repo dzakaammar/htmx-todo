@@ -1,0 +1,27 @@
+package component
+
+import "github.com/dzakaammar/htmx-todo"
+import "github.com/spf13/cast"
+
+templ TodoForm() {
+	<form hx-post="/todos" action="/todos" action="POST" hx-swap="none">
+		<input type="text" name="title"/>
+		<button type="submit">Add</button>
+	</form>
+}
+
+templ TodoList(todos []htmxtodo.Todo) {
+	for _, todo := range todos {
+		<li>
+			<input
+ 				type="checkbox"
+ 				value={ cast.ToString(todo.ID) }
+ 				id={ cast.ToString(todo.ID) }
+ 				if todo.IsDone {
+					checked
+				}
+			/>
+			{ todo.Title }
+		</li>
+	}
+}

@@ -1,0 +1,15 @@
+package page
+
+import "github.com/dzakaammar/htmx-todo"
+import "github.com/dzakaammar/htmx-todo/view/layout"
+import "github.com/dzakaammar/htmx-todo/view/component"
+
+templ Index(todos []htmxtodo.Todo) {
+	@layout.Base() {
+		<h1>My Todo List</h1>
+		@component.TodoForm()
+		<ul hx-get="/todos" hx-trigger="newTodos from:body">
+			@component.TodoList(todos)
+		</ul>
+	}
+}
