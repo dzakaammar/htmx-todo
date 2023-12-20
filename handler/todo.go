@@ -34,7 +34,7 @@ var todos = []*htmxtodo.Todo{
 var counter atomic.Int32
 
 func init() {
-	_ = counter.Add(3)
+	_ = counter.Add(int32(len(todos)))
 }
 
 func IndexPage(w http.ResponseWriter, r *http.Request) {
