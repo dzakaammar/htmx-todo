@@ -2,11 +2,17 @@ package layout
 
 templ Base() {
 	<html>
-		<header>
-			<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
-		</header>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>TODO</title>
+			<link rel="stylesheet" href="/dist/main.css"/>
+			<script src="/dist/htmx.min.js"></script>
+		</head>
 		<body>
-			{ children... }
+			<div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
+				{ children... }
+			</div>
 		</body>
 	</html>
 }

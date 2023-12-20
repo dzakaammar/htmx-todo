@@ -1,27 +1,32 @@
 package component
 
 import "github.com/dzakaammar/htmx-todo"
-import "github.com/spf13/cast"
+import "fmt"
 
 templ TodoForm() {
-	<form hx-post="/todos" action="/todos" action="POST" hx-swap="none">
-		<input type="text" name="title"/>
-		<button type="submit">Add</button>
+	<form class="flex mt-4" hx-post="/todos" action="/todos" action="POST" hx-swap="outerHTML">
+		<input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" name="title" placeholder="Add Todo"/>
+		<button type="submit" class="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">Add</button>
 	</form>
 }
 
-templ TodoList(todos []htmxtodo.Todo) {
+templ TodoList(todos []*htmxtodo.Todo) {
 	for _, todo := range todos {
-		<li>
-			<input
- 				type="checkbox"
- 				value={ cast.ToString(todo.ID) }
- 				id={ cast.ToString(todo.ID) }
- 				if todo.IsDone {
-					checked
-				}
-			/>
-			{ todo.Title }
-		</li>
+		<div class="flex mb-4 items-center" id={ fmt.Sprintf("todo-list-%d", todo.ID) }>
+			@DoneButton(todo)
+			<button hx-delete={ fmt.Sprintf("/todos/%d", todo.ID) } hx-target={ fmt.Sprintf("#todo-list-%d", todo.ID) } hx-swap="delete" class="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Remove</button>
+		</div>
 	}
+}
+
+templ DoneButton(todo *htmxtodo.Todo) {
+	<div class="contents" id={ fmt.Sprintf("done-area-%d", todo.ID) }>
+		if todo.IsDone {
+			<p class="w-full line-through text-grey-darkest">{ todo.Title }</p>
+			<button hx-put={ fmt.Sprintf("/todos/%d", todo.ID) } hx-target={ fmt.Sprintf("#done-area-%d", todo.ID) } hx-swap="innerHTML" class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-grey border-grey hover:bg-grey">Not Done</button>
+		} else {
+			<p class="w-full text-grey-darkest">{ todo.Title }</p>
+			<button hx-put={ fmt.Sprintf("/todos/%d", todo.ID) } hx-target={ fmt.Sprintf("#done-area-%d", todo.ID) } hx-swap="innerHTML" class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-green">Done</button>
+		}
+	</div>
 }

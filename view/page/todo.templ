@@ -4,12 +4,16 @@ import "github.com/dzakaammar/htmx-todo"
 import "github.com/dzakaammar/htmx-todo/view/layout"
 import "github.com/dzakaammar/htmx-todo/view/component"
 
-templ Index(todos []htmxtodo.Todo) {
+templ Index(todos []*htmxtodo.Todo) {
 	@layout.Base() {
-		<h1>My Todo List</h1>
-		@component.TodoForm()
-		<ul hx-get="/todos" hx-trigger="newTodos from:body">
-			@component.TodoList(todos)
-		</ul>
+		<div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
+			<div class="mb-4">
+				<h1 class="text-grey-darkest">Todo List</h1>
+				@component.TodoForm()
+			</div>
+			<div hx-get="/todos" hx-trigger="newTodos from:body">
+				@component.TodoList(todos)
+			</div>
+		</div>
 	}
 }

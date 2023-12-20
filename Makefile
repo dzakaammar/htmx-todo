@@ -1,4 +1,7 @@
 generate:
 	@templ generate
+	@npx tailwindcss -i ./static/input.css -o ./static/dist/main.css
 run:
-	@go run cmd/main.go
+	@air
+deps:
+	@npm install -D tailwindcss
