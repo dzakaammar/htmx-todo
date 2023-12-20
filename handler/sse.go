@@ -16,6 +16,8 @@ func SSE() http.HandlerFunc {
 
 		h := w.Header()
 		h.Set("Content-Type", "text/event-stream")
+		h.Set("Connection", "keep-alive")
+		h.Set("Cache-Control", "no-cache")
 
 	L:
 		for {
