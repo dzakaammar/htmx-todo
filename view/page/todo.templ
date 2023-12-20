@@ -11,8 +11,10 @@ templ Index(todos []*htmxtodo.Todo) {
 				<h1 class="text-grey-darkest">Todo List</h1>
 				@component.TodoForm()
 			</div>
-			<div hx-get="/todos" hx-trigger="newTodos from:body">
-				@component.TodoList(todos)
+			<div class="contents" hx-sse="connect:/sse">
+				<div hx-get="/todos" hx-trigger="sse:newTodos">
+					@component.TodoList(todos)
+				</div>
 			</div>
 		</div>
 	}

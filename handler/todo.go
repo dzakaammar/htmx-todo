@@ -31,10 +31,14 @@ var todos = []*htmxtodo.Todo{
 	},
 }
 
-var counter atomic.Int32
+var (
+	counter atomic.Int32
+	ch      chan struct{}
+)
 
 func init() {
 	_ = counter.Add(int32(len(todos)))
+	ch = make(chan struct{})
 }
 
 func IndexPage(w http.ResponseWriter, r *http.Request) {
@@ -52,13 +56,14 @@ func GetAllTodos(w http.ResponseWriter, r *http.Request) {
 func CreateTodo(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 
-	todos = append(todos, &htmxtodo.Todo{
+	todo := &htmxtodo.Todo{
 		ID:     int(counter.Add(1)),
 		Title:  r.Form.Get("title"),
 		IsDone: false,
-	})
+	}
+	todos = append(todos, todo)
+	ch <- struct{}{}
 
-	w.Header().Set("HX-Trigger", "newTodos")
 	c := component.TodoForm()
 	_ = c.Render(r.Context(), w)
 }
