@@ -28,7 +28,6 @@ func CreateTodo(w http.ResponseWriter, r *http.Request) {
 
 	_ = htmxtodo.NewTodo(r.Form.Get("title"))
 
-	w.Header().Set("HX-Trigger", "newTodos")
 	c := component.TodoForm()
 	_ = c.Render(r.Context(), w)
 }

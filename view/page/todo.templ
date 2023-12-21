@@ -11,7 +11,7 @@ templ Index(todos []*htmxtodo.Todo) {
 				<h1 class="text-grey-darkest">Todo List</h1>
 				@component.TodoForm()
 			</div>
-			<div hx-get="/todos" hx-trigger="newTodos from:body">
+			<div hx-get="/todos" hx-trigger="every 2s">
 				@component.TodoList(todos)
 			</div>
 		</div>
