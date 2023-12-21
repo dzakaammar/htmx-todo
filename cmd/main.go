@@ -19,6 +19,7 @@ func main() {
 	app.Post("/todos", handler.CreateTodo)
 	app.Delete("/todos/{id}", handler.DeleteTodo)
 	app.Put("/todos/{id}", handler.UpdateTodo)
+	handler.WS(app)
 
 	if err := http.ListenAndServe(":8000", app); err != nil {
 		panic(err)

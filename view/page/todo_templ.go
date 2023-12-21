@@ -33,7 +33,7 @@ func Index(todos []*htmxtodo.Todo) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg\"><div class=\"mb-4\"><h1 class=\"text-grey-darkest\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg\" hx-ws=\"connect:/ws\"><div class=\"mb-4\"><h1 class=\"text-grey-darkest\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -50,7 +50,7 @@ func Index(todos []*htmxtodo.Todo) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div hx-get=\"/todos\" hx-trigger=\"newTodos from:body\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div id=\"todo-list-ws\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

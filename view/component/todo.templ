@@ -4,7 +4,7 @@ import "github.com/dzakaammar/htmx-todo"
 import "fmt"
 
 templ TodoForm() {
-	<form class="flex mt-4" hx-post="/todos" action="/todos" action="POST" hx-swap="outerHTML">
+	<form id="todo-form" class="flex mt-4" hx-ws="send" hx-swap-oob="outerHTML:#todo-form">
 		<input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" name="title" placeholder="Add Todo"/>
 		<button type="submit" class="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">Add</button>
 	</form>
@@ -12,11 +12,22 @@ templ TodoForm() {
 
 templ TodoList(todos []*htmxtodo.Todo) {
 	for _, todo := range todos {
-		<div class="flex mb-4 items-center" id={ fmt.Sprintf("todo-list-%d", todo.ID) }>
-			@DoneButton(todo)
-			<button hx-delete={ fmt.Sprintf("/todos/%d", todo.ID) } hx-target={ fmt.Sprintf("#todo-list-%d", todo.ID) } hx-swap="delete" class="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Remove</button>
-		</div>
+		@TodoSingle(todo)
 	}
+}
+
+templ WSTodo(todo *htmxtodo.Todo) {
+	@TodoForm()
+	<div id="todo-ws" hx-swap-oob="beforeend:#todo-list-ws">
+		@TodoSingle(todo)
+	</div>
+}
+
+templ TodoSingle(todo *htmxtodo.Todo) {
+	<div class="flex mb-4 items-center" id={ fmt.Sprintf("todo-list-%d", todo.ID) }>
+		@DoneButton(todo)
+		<button hx-delete={ fmt.Sprintf("/todos/%d", todo.ID) } hx-target={ fmt.Sprintf("#todo-list-%d", todo.ID) } hx-swap="delete" class="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Remove</button>
+	</div>
 }
 
 templ DoneButton(todo *htmxtodo.Todo) {

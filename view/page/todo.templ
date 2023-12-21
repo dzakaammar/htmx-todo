@@ -6,12 +6,12 @@ import "github.com/dzakaammar/htmx-todo/view/component"
 
 templ Index(todos []*htmxtodo.Todo) {
 	@layout.Base() {
-		<div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
+		<div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg" hx-ws="connect:/ws">
 			<div class="mb-4">
 				<h1 class="text-grey-darkest">Todo List</h1>
 				@component.TodoForm()
 			</div>
-			<div hx-get="/todos" hx-trigger="newTodos from:body">
+			<div id="todo-list-ws">
 				@component.TodoList(todos)
 			</div>
 		</div>
