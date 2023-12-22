@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	htmxtodo "github.com/dzakaammar/htmx-todo"
 	"github.com/dzakaammar/htmx-todo/handler"
 	"github.com/dzakaammar/htmx-todo/static"
 	"github.com/go-chi/chi/v5"
@@ -11,6 +12,15 @@ import (
 
 func main() {
 	app := chi.NewRouter()
+
+	app.Use(func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ctx := htmxtodo.InjectNameToCtx(r.Context(), "FooBar")
+
+			h.ServeHTTP(w, r.WithContext(ctx))
+		})
+	})
+
 	app.Use(cors.AllowAll().Handler)
 	static.Handler(app)
 
