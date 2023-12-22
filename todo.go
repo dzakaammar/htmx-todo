@@ -1,6 +1,7 @@
 package htmxtodo
 
 import (
+	"context"
 	"sync/atomic"
 
 	"github.com/samber/lo"
@@ -66,4 +67,21 @@ func UpdateTodo(id int) *Todo {
 	}
 
 	return target
+}
+
+type ctxKey string
+
+var nameCtxKey ctxKey = "name"
+
+func InjectNameToCtx(ctx context.Context, name string) context.Context {
+	return context.WithValue(ctx, nameCtxKey, name)
+}
+
+func ExtractNameFromCtx(ctx context.Context) string {
+	name, ok := ctx.Value(nameCtxKey).(string)
+	if !ok {
+		return ""
+	}
+
+	return name
 }
