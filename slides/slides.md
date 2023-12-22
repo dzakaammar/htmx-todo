@@ -246,8 +246,8 @@ templ Index(todo *Todo) {
 - [Another video by ThePrimeagen](https://www.youtube.com/watch?v=fhXyn0Vrwv4)
 - [The Truth About HTMX by Theo - t3.gg](https://www.youtube.com/watch?v=NA5Fcgs_viU) or [The react video by ThPrimeagen](https://www.youtube.com/watch?v=2hMrk7A8Wf0)
 
-![bg auto right](meme2.jpeg)
-
 ---
 
 # Thank you!
+
+![bg auto right](meme2.jpeg)

@@ -5,3 +5,5 @@ run:
 	@air
 deps:
 	@npm install -D tailwindcss
+slide:
+	@marp --html slides/slides.md
